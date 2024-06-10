@@ -1,0 +1,8 @@
+How to make your code terrible (convention):
+- Indentation
+- Curley braces on their own lines
+
+
+
+How to make your code not work (syntax): 
+- No need for curley braces if your code is on one line
