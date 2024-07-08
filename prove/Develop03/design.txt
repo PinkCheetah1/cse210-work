@@ -1,0 +1,61 @@
+CLASSES:
+
+Scripture:
+A
+- _reference
+- _words
+- _visibleWordIndexi
+C
+- (reference, Scripture)
+M
+- HideWords
+    Hide some words in the Scripture randomly
+    Generate random letter in range 1-len(visible words)
+    Find that word's index in _visibleWordIndexi
+    Set that word to hidden
+- DisplayRender
+    Display the scripture with the hidden words
+- AllWordsHidden
+    Test to see if there are still some words
+
+Reference:
+A
+- Book
+- Chapter
+- Start Verse
+- End Verse
+C 
+- (Book, Chapter, Start Verse)
+- (Book, Chapter, Start Verse, End Verse)
+M
+- GetReferenceString 
+    Return string with formatted reference
+
+Word
+A
+- Word
+- Is Hidden? 
+C
+- (Word) isHidden = False
+M
+- GetLength (private)
+- Hide (set to hidden)
+- GetRendered (return ___ if hidden, return word if not)
+
+
+
+
+Program
+A:
+- isRunning (bool)
+
+
+Do:
+    Print scripture for user
+    Ask the user to press enter or quit
+if Enter:
+    Run scripture.HideWords
+    Display scripture to user
+    If scripture is all hidden, quit Program
+if quit: 
+    Quit
