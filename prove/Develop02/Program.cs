@@ -1,4 +1,5 @@
 using System;
+using System.IO; 
 
 class Program
 {
@@ -9,6 +10,7 @@ class Program
         //Variables
         bool isRunning = true;
         string userInput;
+        Journal journal = new Journal();
 
         //Write instructions
 
@@ -16,35 +18,45 @@ class Program
         do
         {
         Console.WriteLine("Please select one of the following choices: ");
-        Console.WriteLine("1. Write");
-        Console.WriteLine("2. Display");
+        Console.WriteLine("1. Write"); // Done
+        Console.WriteLine("2. Display"); // Done
         Console.WriteLine("3. Load");
-        Console.WriteLine("4. Save");
-        Console.WriteLine("5. Quit");
+        Console.WriteLine("4. Save"); // Done
+        Console.WriteLine("5. Quit"); // Done
 
         Console.Write("What would you like to do? ");
         userInput = Console.ReadLine();
         if (userInput == "1")
         {
-            //MENU ITEM: Write
+            // MENU ITEM: Write
+            journal.NewEntry();
         }
+
         else if (userInput == "2")
         {
-            //MENU ITEM: Display
+            // MENU ITEM: Display
+            journal.Display();
         }
 
         else if (userInput == "3")
         {
             //MENU ITEM: Load
+            Console.Write("Please enter file name: ");
+            string file = Console.ReadLine();
+            journal.Load(file);
         }
 
         else if (userInput == "4")
         {
-            //MENU ITEM: Save
+            // MENU ITEM: Save
+            Console.Write("Please enter file: ");
+            string file = Console.ReadLine();
+            journal.Save(file);
         }
 
         else if (userInput == "5")
         {
+            // MENU ITEM: Quit
             isRunning = false;
             Console.WriteLine("Bye bye!");
         }
