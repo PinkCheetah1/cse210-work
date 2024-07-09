@@ -50,11 +50,11 @@ public class Word
             // TODO
             // Get length of word and
             // return _ for each letter
-            render = "_";
+            render = "_ ";
         }
         else
         {
-            render = _letters;
+            render = _letters + " ";
         }
 
         return render;
