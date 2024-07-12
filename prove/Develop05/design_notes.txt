@@ -1,0 +1,41 @@
+ETERNAL QUESTION 
+This is a program that does the gamification of
+life activities like I've been wanting to create for
+a while 
+
+
+Potential classes:
+user (tracks points)
+goals (number of points, is completed)
+- simple goal (complete once)
+- eternal goal (complete infinite times)
+- checklist goal (complete a set number of times, which bonus at end)
+menu
+- METHODS:
+    create goal
+    list goals
+    save goals
+    load goals
+    record event
+    quit
+
+other:
+- file to save goals (and point)
+
+
+
+Program additions:
+- statistic (abstract class for a statistic a
+    player's statistic might have, for example, 
+    halflife, max points, etc.)
+- user class also tracks statistics
+- goal classes also track statistic points
+- file to save user stats (multiple users?)
+- interface? O: 
+- JSON? O: (professor gave up so... maybe not this)
+- Points store (you create your own items to spend points on!)
+- Store item recommendation random generator (AI generates based on what it
+    knows about you)
+- Some goals can be completed once every x time length
+- Dynamic goals list that changes based on status of player
+

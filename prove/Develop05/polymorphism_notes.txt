@@ -1,0 +1,19 @@
+ABSTRACT
+- Cannot create as an object
+- The method that is abstract MUST be overwritted in the 
+    child class
+- Refers to a class that contains an abstract method
+- also refers to method that is abstract (does not contain
+    default code)
+
+VIRTUAL
+- Virtual class CAN be created as an object
+- Method will exist in all child classes and does not need
+    to be overwritten to use
+
+
+A lot of the value of abstract classes and methods are idiot-proofing.
+In other words, you are the idiot. 
+It ensures that EVERY child class does, in fact, contain that method
+even if you forgot, because it won't let you run unless you have
+included that method for the child class. 

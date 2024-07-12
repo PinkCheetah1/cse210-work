@@ -1,0 +1,57 @@
+CLASSES:
+
+abstract Goal
+Attributes:
+- name of the goal
+- points (?)
+- (bool) is complete?
+
+Constructors:
+- 
+
+Methods 
+- check off list
+    add points
+    mark as complete
+- display
+    (print name, points, if finished, and other)
+
+
+
+CHILD CLASSES:
+simple goal
+Attributes
+    -
+Methods
+    -
+
+eternal goal
+Attributes
+    -
+Methods
+    - check off list does NOT mark as complete
+
+checklist goal  
+Attributes 
+    - completion goal
+    - completion progress
+    - bonus points upon completion
+Methods
+    - Check off list calculates points
+        and checks to see if task 
+        is complete to add bonus
+
+MENU:
+- METHODS:
+    create goal
+    list goals
+    save goals
+    load goals
+    record event
+    quit
+
+
+
+
+OTHER:
+- List of goals (perhaps in menu?)
