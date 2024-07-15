@@ -34,7 +34,6 @@ public abstract class Goal
     }
 
     // Getter and setter methods
-
     // Getters and Setters written by ChatGPT
     public string GetName()
     {
@@ -77,11 +76,16 @@ public abstract class Goal
     }
 
     // Abstract method for checking off a goal
-    public abstract void CheckOff();
+    public abstract int CheckOff();
 
     // Virtual method to display goal details
     public virtual void Display()
     {
-        Console.WriteLine($"Goal: {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()}, Completed: {GetIsComplete()}");
+        string checkbox = "[ ]";
+        if (GetIsComplete())
+        {
+            checkbox = "[x]";
+        }
+        Console.WriteLine($"{checkbox} {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()}");
     }
 }
