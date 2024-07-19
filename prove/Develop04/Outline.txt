@@ -1,0 +1,41 @@
+Parent class:
+A
+- name of activity
+- description of activity
+- time for activity
+
+M
+- open message
+- close message
+- spinner (length)
+- prompt time
+- countdown (length)
+
+Derived Classes
+
+Breathing activity
+A 
+
+M 
+- Constructor
+- Start activity
+
+Reflection activity
+A 
+
+M 
+- Constructor
+- Start 
+- Select Prompt from list
+- Select Reflection from list 
+
+
+Listing Activity 
+A 
+- List of prompts (?)
+- List of reflections (?)
+
+M 
+- Constructor
+- Start 
+- DisplayItemCount (ChatGPT suggestion)
