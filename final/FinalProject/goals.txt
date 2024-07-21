@@ -1,0 +1,4 @@
+0
+SimpleGoal||Finish This Assignment||Finishing doing this assignment and turn it in <3||100||False
+EternalGoal||eat||eat sum foodz||50
+ChecklistGoal||do assignment||do any assignment <3||150||False||3||0||500
