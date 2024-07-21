@@ -9,9 +9,14 @@ class EternalGoal : Goal
 
     // Override CheckOff method to add points without marking the goal as complete
 
-        public override int CheckOff()
+    public override int CheckOff()
     {
         base.SetIsComplete(true);
         return base.GetPointsValue();
+    }
+
+    public override string RenderString()
+    {
+        return $"EternalGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}";
     }
 }

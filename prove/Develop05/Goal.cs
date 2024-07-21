@@ -78,14 +78,18 @@ public abstract class Goal
     // Abstract method for checking off a goal
     public abstract int CheckOff();
 
+    // Abstract method to return string for saving to file
+    public abstract string RenderString();
+
     // Virtual method to display goal details
-    public virtual void Display()
+    public virtual string RenderDisplay()
     {
         string checkbox = "[ ]";
         if (GetIsComplete())
         {
             checkbox = "[x]";
         }
-        Console.WriteLine($"{checkbox} {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()}");
+        return $"{checkbox} {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()}";
     }
+
 }
