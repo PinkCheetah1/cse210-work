@@ -14,9 +14,13 @@ public abstract class Goal
     private string _description;
     private int _pointsValue;
     private bool _isComplete;
+    private int _energyValue;
+    private int _workValue;
+    private int _healthValue;
+    private int _funValue;
 
     // Constructor to initialize common attributes ):<
-    public Goal(string name, string description, int pointsValue)
+    public Goal(string name, string description, int pointsValue, int energyValue, int workValue, int healthValue, int funValue)
     {
         _name = name;
         _description = description;
@@ -25,7 +29,7 @@ public abstract class Goal
     }
 
     // In case they send me a string for pointsValue
-    public Goal(string name, string description, string pointsValue)
+    public Goal(string name, string description, string pointsValue, int energyValue, int workValue, int healthValue, int funValue)
     {
         _name = name;
         _description = description;
@@ -74,6 +78,43 @@ public abstract class Goal
     {
         _isComplete = isComplete;
     }
+
+    public int GetEnergyValue()
+    {
+        return _energyValue;
+    }
+    public void SetEnergyValue(int energyValue)
+    {
+        _energyValue = energyValue;
+    }
+
+        public int GetWorkValue()
+    {
+        return _workValue;
+    }
+    public void SetWorkValue(int workValue)
+    {
+        _workValue = workValue;
+    }
+
+        public int GetFunValue()
+    {
+        return _funValue;
+    }
+    public void SetFunValue(int funValue)
+    {
+        _funValue = funValue;
+    }
+
+        public int GetHealthValue()
+    {
+        return _healthValue;
+    }
+    public void SetHealthValue(int healthValue)
+    {
+        _healthValue = healthValue;
+    }
+
 
     // Abstract method for checking off a goal
     public abstract int CheckOff();

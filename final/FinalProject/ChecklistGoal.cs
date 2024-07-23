@@ -1,13 +1,14 @@
 // Derived class for checklist goals
-class ChecklistGoal : Goal
+public class ChecklistGoal : Goal
 {
     // Properties specific to checklist goals: completion goal, progress, bonus points
-    private int _maxComplete;
-    private int _numComplete;
-    private int _bonus;
+    protected int _maxComplete;
+    protected int _numComplete;
+    protected int _bonus;
 
     // Constructor to initialize checklist goal
-    public ChecklistGoal(string name, string description, string pointsValue, int maxComplete, int bonus) : base(name, description, pointsValue)
+    public ChecklistGoal(string name, string description, string pointsValue, int maxComplete, int bonus, int energyValue, int workValue, int healthValue, int funValue) 
+    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
     {
         _maxComplete = maxComplete;
         _bonus = bonus;
@@ -15,7 +16,8 @@ class ChecklistGoal : Goal
     }
 
     // Constructor for loading from file
-        public ChecklistGoal(string name, string description, string pointsValue, bool isComplete, int maxComplete, int numComplete, int bonus) : base(name, description, pointsValue)
+    public ChecklistGoal(string name, string description, string pointsValue, bool isComplete, int maxComplete, int numComplete, int bonus, int energyValue, int workValue, int healthValue, int funValue)
+    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
     {
         _maxComplete = maxComplete;
         _bonus = bonus;
@@ -53,12 +55,12 @@ class ChecklistGoal : Goal
         {
             checkbox = "[x]";
         }
-        return $"{checkbox} {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()} -- {_maxComplete}/{_numComplete}";
+        return $"{checkbox} {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()} -- {_numComplete}/{_maxComplete}";
     }
 
     public override string RenderString()
     {
         /// Returns 7
-        return $"ChecklistGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}";
+        return $"ChecklistGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetEnergyValue}||{base.GetWorkValue}||{base.GetHealthValue}||{base.GetFunValue}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}";
     }
 }

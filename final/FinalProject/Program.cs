@@ -6,6 +6,13 @@ class Program
 {
     static void Main(string[] args)
     {
+        /// When the program runs I want it to: 
+        ///     Load user info
+        ///     Load goals info
+        ///     Load shop info
+        ///     Create a new menu so that we can do stuff
+        ///     Set program to running so it runs
+        ///     
         bool isRunning = true;
         Menu menu = new Menu();
         string userInput;
@@ -13,11 +20,52 @@ class Program
         bool isValid;
         string fileName;
 
+        // Load in data:
+        string userFileName = "User.txt";
+        string goalsFileName = "Goals.txt";
+        string shopFileName = "Shop.txt";
+
+        if (File.Exists(userFileName))
+        {
+            goals = menu.ReadGoalsFromFile(userFileName);
+            isValid = true;
+        }
+        else
+        {
+            Console.WriteLine("ERROR: user file missing. ");
+        }
+
+        if (File.Exists(goalsFileName))
+        {
+            goals = menu.ReadGoalsFromFile(goalsFileName);
+            isValid = true;
+        }
+        else
+        {
+            Console.WriteLine("ERROR: goals file missing. ");
+        }
+
+        if (File.Exists(shopFileName))
+        {
+            goals = menu.ReadGoalsFromFile(shopFileName);
+            isValid = true;
+        }
+        else
+        {
+            Console.WriteLine("ERROR: shop file missing. ");
+        }
+
 
 
         while (isRunning)
         {
-            menu.PrintMenuOptions();
+            Console.WriteLine("Menu Options:");
+            Console.WriteLine("    1. Create New Goal");
+            Console.WriteLine("    2. List Goals");
+            Console.WriteLine("    3. Save");
+            Console.WriteLine("    4. Open Shop");
+            Console.WriteLine("    5. Record Event");
+            Console.WriteLine("    6. Quit");
             Console.Write("Select a choice from the menu: ");
             userInput = Console.ReadLine();
 
@@ -43,12 +91,12 @@ class Program
                             break;
                             
                         case "2":
-                            newGoal = menu.NewEternal();
+                            newGoal = menu.NewEternalGoal();
                             goals.Add(newGoal);
                             break;
                             
                         case "3":
-                            newGoal = menu.NewChecklist();
+                            newGoal = menu.NewChecklistGoal();
                             goals.Add(newGoal);
                             break;
                         
@@ -100,34 +148,8 @@ class Program
                     break;
 
 
-                // MENU ITEM: Load Goals      
+                // MENU ITEM: BLANK (will become SHOP)   
                 case "4":
-                    isValid = false;
-                    while (!isValid)
-                    {
-                        
-                        Console.Write("What is the name of the file you'd like to load from? ");
-                        fileName = Console.ReadLine();
-
-                        if (fileName == "")
-                        {
-                            Console.WriteLine("Returning to menu... ");
-                            isValid = true;
-                        }
-
-                        else if (File.Exists(fileName))
-                        {
-                            goals = menu.ReadGoalsFromFile(fileName);
-                            isValid = true;
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("Invalid file name.");
-                            Console.WriteLine("Please enter a valid file name or press ENTER to return to menu. ");
-                            Console.WriteLine(); 
-                        }
-                    }
                     break;
 
 

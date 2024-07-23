@@ -2,11 +2,13 @@
 class SimpleGoal : Goal
 {
     // Constructor to initialize simple goal
-    public SimpleGoal(string name, string description, string pointsValue) : base(name, description, pointsValue)
+    public SimpleGoal(string name, string description, string pointsValue, int energyValue, int workValue, int healthValue, int funValue) 
+    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
     {
     }
     // Constructor for loading from file
-    public SimpleGoal(string name, string description, string pointsValue, bool isComplete) : base(name, description, pointsValue)
+    public SimpleGoal(string name, string description, string pointsValue, bool isComplete, int energyValue, int workValue, int healthValue, int funValue) 
+    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
     {
         base.SetIsComplete(isComplete);
     }
@@ -19,7 +21,7 @@ class SimpleGoal : Goal
 
     public override string RenderString()
     {
-        return $"SimpleGoal||{GetName()}||{GetDescription()}||{GetPointsValue()}||{GetIsComplete()}";
+        return $"SimpleGoal||{GetName()}||{GetDescription()}||{GetPointsValue()}||{base.GetEnergyValue}||{base.GetWorkValue}||{base.GetHealthValue}||{base.GetFunValue}||{GetIsComplete()}";
     }
 
 }
