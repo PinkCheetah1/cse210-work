@@ -1,0 +1,6 @@
+SimpleGoal||Explore Menu Options||Description||10||0||0||0||0||True
+EternalGoal||Do Daily Planning||Description||20||0||0||0||0
+ChecklistGoal||Finish 3 tasks||Description||30||0||0||0||0||False||3||1||10
+SimpleGoal||Test||Test stats update||2||0||0||0||0||True
+SimpleGoal||Test 1||Testing 2||2||0||0||0||0||True
+SimpleGoal||test 3||test||1||2||3||4||5||True

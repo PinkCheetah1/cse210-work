@@ -1,64 +1,111 @@
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
+using System.IO;
 
 class Program
 {
     static void Main(string[] args)
     {
-        /// When the program runs I want it to: 
-        ///     Load user info
-        ///     Load goals info
-        ///     Load shop info
-        ///     Create a new menu so that we can do stuff
-        ///     Set program to running so it runs
-        ///     
+        // When the program runs I want it to: 
+        // Load user info
+        // Load goals info
+        // Load shop info
+        // Create a new menu so that we can do stuff
+        // Set program to running so it runs
+
         bool isRunning = true;
         Menu menu = new Menu();
         string userInput;
         List<Goal> goals = new List<Goal>();
-        bool isValid;
-        string fileName;
+        string playerName = "";
+        string playerFileName = "";
+        string goalsFileName = "";
+        string shopFileName = "";
 
-        // Load in data:
-        string userFileName = "User.txt";
-        string goalsFileName = "Goals.txt";
-        string shopFileName = "Shop.txt";
+        // File loading code written with the help of ChatGPT
+        // It wrote some basic code for creating
+        // new files and helped me write the code
+        // for writing the default files
 
-        if (File.Exists(userFileName))
-        {
-            goals = menu.ReadGoalsFromFile(userFileName);
-            isValid = true;
-        }
-        else
-        {
-            Console.WriteLine("ERROR: user file missing. ");
-        }
 
-        if (File.Exists(goalsFileName))
+        Console.Clear();
+        // Load in data or create new player
+        // Get list of Players Data that's saved
+        string[] players = Directory.GetDirectories("PlayersInfo");
+        Console.WriteLine("Existing players:");
+        foreach (string playerNameDirectory in players)
         {
-            goals = menu.ReadGoalsFromFile(goalsFileName);
-            isValid = true;
-        }
-        else
-        {
-            Console.WriteLine("ERROR: goals file missing. ");
+            Console.WriteLine(Path.GetFileName(playerNameDirectory));
         }
 
-        if (File.Exists(shopFileName))
+        // Get player name from user
+        do
         {
-            goals = menu.ReadGoalsFromFile(shopFileName);
-            isValid = true;
-        }
-        else
-        {
-            Console.WriteLine("ERROR: shop file missing. ");
-        }
+            Console.Write("Please enter player name to load data or press ENTER to create new profile: ");
+            playerName = Console.ReadLine();
+            if (string.IsNullOrEmpty(playerName))
+            {
+                // Run to create new player
+                Console.Write("Enter new player name: ");
+                playerName = Console.ReadLine();
+                // Create default files
+                Directory.CreateDirectory($"PlayersInfo/{playerName}");
+                File.Create($"PlayersInfo/{playerName}/player.txt").Dispose();
+                File.Create($"PlayersInfo/{playerName}/goals.txt").Dispose();
+                File.Create($"PlayersInfo/{playerName}/shop.txt").Dispose();
+
+                // Write default player info
+                using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/player.txt"))
+                {
+                    writer.WriteLine($"{playerName}");
+                    writer.WriteLine("0");
+                    writer.WriteLine($"Energy,100,-10,{DateTime.Now}");
+                    writer.WriteLine($"Health,100,2,{DateTime.Now}");
+                    writer.WriteLine($"Work,100,2,{DateTime.Now}");
+                    writer.WriteLine($"Rest,100,2,{DateTime.Now}");
+                }
+
+                // Write default goals info
+                using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/goals.txt"))
+                {
+                    writer.WriteLine("SimpleGoal||Explore||Check out some menu options!||10||10||10||10||10||false");
+                    writer.WriteLine("EternalGoal||Do Daily Planning||Add your tasks and prioritize for the day||20||20||20||20||20");
+                    writer.WriteLine("ChecklistGoal||Finish 3 tasks||Finish a task!||30||30||30||30||30||false||3||0||10");
+                }
+
+                // Write default shop info (placeholder)
+                using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/shop.txt"))
+                {
+                    writer.WriteLine("// Shop data goes here");
+                }
+            }
+
+        } while (!Directory.Exists($"PlayersInfo/{playerName}"));
+
+        // Run to set correct loading files
+        playerFileName = $"PlayersInfo/{playerName}/player.txt";
+        goalsFileName = $"PlayersInfo/{playerName}/goals.txt";
+        shopFileName = $"PlayersInfo/{playerName}/shop.txt";
+
+        // Load all data from files
+        // GOALS
+        goals = menu.ReadGoalsFromFile(goalsFileName);
+        // PLAYER
+        Player player = Player.Load(playerFileName);
+
+        
+
+        // SHOP placeholder
 
 
 
+        Console.Clear();
+        // MENU
         while (isRunning)
-        {
+        { 
+            player.DecayStats();
+            Console.WriteLine(player.RenderStatsDisplay());
+            Console.WriteLine();
             Console.WriteLine("Menu Options:");
             Console.WriteLine("    1. Create New Goal");
             Console.WriteLine("    2. List Goals");
@@ -68,6 +115,7 @@ class Program
             Console.WriteLine("    6. Quit");
             Console.Write("Select a choice from the menu: ");
             userInput = Console.ReadLine();
+
 
             switch (userInput)
             {
@@ -99,9 +147,14 @@ class Program
                             newGoal = menu.NewChecklistGoal();
                             goals.Add(newGoal);
                             break;
+
+                        case "4":
+                            newGoal = menu.NewProgressiveGoal();
+                            goals.Add(newGoal);
+                            break;
                         
                         default:
-                            Console.WriteLine("Please enter a valid input");
+                            Console.WriteLine("Invalid input. Returning to menu. ");
                             break;
                     }
                     Console.WriteLine();
@@ -119,32 +172,10 @@ class Program
 
                 // MENU ITEM: Save Goals
                 case "3":
-                    isValid = false;
-                    while (!isValid)
-                    {
-                        Console.Write("What is the filename for the goal file? ");
-                        fileName = Console.ReadLine();
-
-                        if (fileName == "")
-                        {
-                            Console.WriteLine("Returning to menu... ");
-                            isValid = true;
-                        }
-
-                        else if (File.Exists(fileName))
-                        {
-                            menu.WriteGoalsToFile(fileName, goals);
-                            isValid = true;
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("Invalid file name.");
-                            Console.WriteLine("Please enter a valid file name or press ENTER to return to menu. ");
-                            Console.WriteLine(); 
-                        }
-                    }
-                        
+                    // TODO Write save stuff
+                    menu.WriteGoalsToFile(goalsFileName, goals);
+                    player.Save(playerFileName);
+                    Console.WriteLine("SHOP SAVE NOT IMPLIMENTED");
                     break;
 
 
@@ -157,10 +188,16 @@ class Program
                 case "5":
 
                     Console.WriteLine();
+                    Console.WriteLine("You have the following goals: ");
                     menu.DisplayGoals(goals);
                     Console.Write("Which goal did you accomplish? ");
                     int goalIndex = int.Parse(Console.ReadLine());
-                    menu.CheckOffGoal(goalIndex - 1, goals);
+                    player.DecayStats(); // Decay before adding stat increase from task
+                    int pointsEarned = goals[goalIndex - 1].CheckOff(player);
+                    Console.WriteLine();
+                    Console.WriteLine($"Congratulations! You have earned {pointsEarned} points!");
+                    Console.WriteLine($"You now have {player.GetPoints()} points. ");
+                    Console.WriteLine();
                     break;
 
 

@@ -16,14 +16,14 @@ public class ProgressiveGoal : ChecklistGoal
     }
 
     // Constructor for loading from file
-    public ProgressiveGoal(string name, string description, string pointsValue, bool isComplete, int maxComplete, int numComplete, int bonus, int energyValue, int workValue, int healthValue, int funValue, List<string> steps)
-    : base(name, description, pointsValue, isComplete, maxComplete, numComplete, bonus, energyValue, workValue, healthValue, funValue)
+    public ProgressiveGoal(string name, string description, int pointsValue, int energyValue, int workValue, int healthValue, int funValue, bool isComplete, int maxComplete, int numComplete, int bonus, List<string> steps)
+    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue, isComplete,  maxComplete, numComplete, bonus)
     {
         _steps = steps;
     }
 
     // Override CheckOff method to add points, increment progress, check for completion, and add bonus points if complete
-    public override int CheckOff()
+    public override int CheckOff(Player player)
     {
         // TODO
         int pointsEarned = 0;
@@ -39,7 +39,13 @@ public class ProgressiveGoal : ChecklistGoal
             _numComplete += 1;
             SetDescription($"STEP {_numComplete}: {_steps[_numComplete]}");
         }
-        
+        player.AddPoints(pointsEarned);
+        player.IncreaseStats(
+            base.GetEnergyValue(),
+            base.GetWorkValue(),
+            base.GetHealthValue(),
+            base.GetFunValue()
+        );
         return pointsEarned;
     }
 
@@ -47,7 +53,7 @@ public class ProgressiveGoal : ChecklistGoal
 
     public override string RenderString()
     {
-        /// Returns 7
-        return $"ChecklistGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetEnergyValue}||{base.GetWorkValue}||{base.GetHealthValue}||{base.GetFunValue}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}||{_steps}";
+        string stepsString = string.Join(";;", _steps); // Join steps with a unique delimiter
+        return $"ProgressiveGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetEnergyValue()}||{base.GetWorkValue()}||{base.GetHealthValue()}||{base.GetFunValue()}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}||{stepsString}";
     }
 }

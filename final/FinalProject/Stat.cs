@@ -21,30 +21,16 @@ public class Stat
         _name = name;
         _level = level;
         _decayRate = decayRate;
+        _lastUpdateTime = lastUpdateTime;
     }
 
     // Methods
 
-    public void Increase(int increase)
-    {
-        _level = Math.Min(100.0, _level + increase);
-    }
-
-    public int GetLevel()
-    {
-        // Rounding to int to display a pretty number
-        return (int)Math.Round(_level);
-    }
-
     // Method to update the level based on the time elapsed
-    public void Update()
+    public void Decay()
     {
-        /// Code proposed by ChatGPT
-        /// I came up with the process and asked
-        /// ChatGPT to show me how to do it. 
-        /// The following code is what it provided <3 
-        /// 
-
+        // Code written by ChatGPT with
+        // lots of guidance
         DateTime now = DateTime.Now;
         TimeSpan elapsed = now - _lastUpdateTime;
 
@@ -53,13 +39,27 @@ public class Stat
 
         // Apply decay
         _level = Math.Max(0.0, _level - (_decayRate * hoursElapsed));
+        _level = Math.Min(100.0, _level);
 
         // Update the last update time
         _lastUpdateTime = now;
     }
 
+    public void Increase(int increase)
+    {
+        _level = Math.Min(100.0, _level + increase);
+        _level = Math.Max(0.0, _level);
+    }
+
+    public int GetLevel()
+    {
+        // Rounding to int to display a pretty number
+        return (int)Math.Round(_level);
+    }
+
     public string RenderSave()
     {
+        // Small changes proposed by ChatGPT
         return $"{_name},{_level},{_decayRate},{_lastUpdateTime}";
     }
 }

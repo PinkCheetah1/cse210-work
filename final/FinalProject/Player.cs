@@ -1,4 +1,4 @@
-public class User
+public class Player
 {
     // Attributes
     private string _name;
@@ -9,7 +9,7 @@ public class User
     private Stat _fun;
 
     // Constructors
-    public User(string name, int points, Stat energy, Stat work, Stat health, Stat fun)
+    public Player(string name, int points, Stat energy, Stat work, Stat health, Stat fun)
     {
         _name = name;
         _points = points;
@@ -22,6 +22,9 @@ public class User
     // Methods
 
     // Method to save user data to a file
+    // Save and load written by ChatGPT
+    // Very complicated, but I do understand
+    // after getting help from ChatGPT :D
     public void Save(string filePath)
     {
         using (StreamWriter writer = new StreamWriter(filePath))
@@ -38,7 +41,7 @@ public class User
     }
 
     // Method to load user data from a file
-    public static User Load(string filePath)
+    public static Player Load(string filePath)
     {
         using (StreamReader reader = new StreamReader(filePath))
         {
@@ -51,7 +54,7 @@ public class User
             Stat health = LoadStat(reader.ReadLine());
             Stat fun = LoadStat(reader.ReadLine());
 
-            return new User(name, points, energy, work, health, fun);
+            return new Player(name, points, energy, work, health, fun);
         }
     }
 
@@ -68,5 +71,37 @@ public class User
 
         // Create and return a new Stat object
         return new Stat(name, level, decayRate, lastUpdateTime);
+    }   
+
+    public void IncreaseStats(int energyIncrease, int workIncrease, int healthIncrease, int funIncrease)
+    {
+        // This method increases all stats by respective amounts
+        _energy.Increase(energyIncrease);
+        _work.Increase(workIncrease);
+        _health.Increase(healthIncrease);
+        _fun.Increase(funIncrease);
+    }
+
+    public void DecayStats()
+    {
+        _energy.Decay();
+        _work.Decay();
+        _health.Decay();
+        _fun.Decay();
+    }
+
+    public string RenderStatsDisplay()
+    {
+        return $"--- | ENERGY: {_energy.GetLevel()} | WORK: {_work.GetLevel()} | HEALTH: {_health.GetLevel()} | FUN: {_fun.GetLevel()} | POINTS: {_points} | ---";
+    }
+
+    public int GetPoints()
+    {
+        return _points;
+    }
+
+    public void AddPoints(int newPoints)
+    {
+        _points += newPoints;
     }
 }

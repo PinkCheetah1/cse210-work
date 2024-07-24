@@ -26,6 +26,10 @@ public abstract class Goal
         _description = description;
         _pointsValue = pointsValue;
         _isComplete = false;
+        _energyValue = energyValue;
+        _workValue = workValue;
+        _healthValue = healthValue;
+        _funValue = funValue;
     }
 
     // In case they send me a string for pointsValue
@@ -35,6 +39,10 @@ public abstract class Goal
         _description = description;
         _pointsValue = int.Parse(pointsValue);
         _isComplete = false;
+        _energyValue = energyValue;
+        _workValue = workValue;
+        _healthValue = healthValue;
+        _funValue = funValue;
     }
 
     // Getter and setter methods
@@ -117,7 +125,7 @@ public abstract class Goal
 
 
     // Abstract method for checking off a goal
-    public abstract int CheckOff();
+    public abstract int CheckOff(Player player);
 
     // Abstract method to return string for saving to file
     public abstract string RenderString();

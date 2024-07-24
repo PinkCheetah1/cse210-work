@@ -16,7 +16,7 @@ public class ChecklistGoal : Goal
     }
 
     // Constructor for loading from file
-    public ChecklistGoal(string name, string description, string pointsValue, bool isComplete, int maxComplete, int numComplete, int bonus, int energyValue, int workValue, int healthValue, int funValue)
+    public ChecklistGoal(string name, string description, int pointsValue, int energyValue, int workValue, int healthValue, int funValue, bool isComplete,int maxComplete, int numComplete, int bonus)
     : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
     {
         _maxComplete = maxComplete;
@@ -26,7 +26,7 @@ public class ChecklistGoal : Goal
     }
 
     // Override CheckOff method to add points, increment progress, check for completion, and add bonus points if complete
-    public override int CheckOff()
+    public override int CheckOff(Player player)
     {
         // TODO
         int pointsEarned = 0;
@@ -42,6 +42,13 @@ public class ChecklistGoal : Goal
             _numComplete += 1;
         }
         
+        player.AddPoints(pointsEarned);
+        player.IncreaseStats(
+            base.GetEnergyValue(),
+            base.GetWorkValue(),
+            base.GetHealthValue(),
+            base.GetFunValue()
+        );
         return pointsEarned;
     }
 
@@ -60,7 +67,6 @@ public class ChecklistGoal : Goal
 
     public override string RenderString()
     {
-        /// Returns 7
-        return $"ChecklistGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetEnergyValue}||{base.GetWorkValue}||{base.GetHealthValue}||{base.GetFunValue}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}";
+        return $"ChecklistGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetEnergyValue()}||{base.GetWorkValue()}||{base.GetHealthValue()}||{base.GetFunValue()}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}";
     }
 }
