@@ -2,8 +2,8 @@
 class EternalGoal : Goal
 {
     // Constructor to initialize eternal goal
-    public EternalGoal(string name, string description, int pointsValue, int energyValue, int workValue, int healthValue, int funValue) 
-    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
+    public EternalGoal(string name, int pointsValue, int energyValue, int workValue, int healthValue, int funValue) 
+    : base(name, pointsValue, energyValue, workValue, healthValue, funValue)
     {
 
     }
@@ -24,6 +24,6 @@ class EternalGoal : Goal
 
     public override string RenderString()
     {
-        return $"EternalGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetEnergyValue()}||{base.GetWorkValue()}||{base.GetHealthValue()}||{base.GetFunValue()}";
+        return $"EternalGoal||{base.GetName()}||{base.GetPointsValue()}||{base.GetEnergyValue()}||{base.GetWorkValue()}||{base.GetHealthValue()}||{base.GetFunValue()}";
     }
 }

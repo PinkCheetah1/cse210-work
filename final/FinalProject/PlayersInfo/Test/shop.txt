@@ -1,0 +1,2 @@
+Candy||Something Sweet!||3||50
+Movie time!||Watch something fun!!||1||500

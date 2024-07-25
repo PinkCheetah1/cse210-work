@@ -1,0 +1,3 @@
+SimpleGoal||Explore||10||10||10||10||10||false
+EternalGoal||Do Daily Planning||20||20||20||20||20
+ChecklistGoal||Finish 3 tasks||30||30||30||30||30||false||3||0||10

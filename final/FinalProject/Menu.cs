@@ -15,8 +15,6 @@ class Menu
     {
         Console.Write("Please enter goal name: ");
         string name = Console.ReadLine();
-        Console.Write("Please enter goal description: ");
-        string description = Console.ReadLine();
         Console.Write("Please enter goal points value: ");
         string points = Console.ReadLine();
         Console.Write("Please enter energy value: ");
@@ -27,7 +25,7 @@ class Menu
         int health = int.Parse(Console.ReadLine());
         Console.Write("Please enter fun value: ");
         int fun = int.Parse(Console.ReadLine());
-        Goal goal = new SimpleGoal(name, description, points, energy, work, health, fun);
+        Goal goal = new SimpleGoal(name, points, energy, work, health, fun);
         return goal;
     }
 
@@ -36,8 +34,6 @@ class Menu
     {
         Console.Write("Please enter goal name: ");
         string name = Console.ReadLine();
-        Console.Write("Please enter goal description: ");
-        string description = Console.ReadLine();
         Console.Write("Please enter goal points value: ");
         string points = Console.ReadLine();
         Console.Write("Please enter the number of times to complete this goal: ");
@@ -52,7 +48,7 @@ class Menu
         int health = int.Parse(Console.ReadLine());
         Console.Write("Please enter fun value: ");
         int fun = int.Parse(Console.ReadLine());
-        Goal goal = new ChecklistGoal(name, description, points, maxComplete, bonus, energy, work, health, fun);
+        Goal goal = new ChecklistGoal(name, points, maxComplete, bonus, energy, work, health, fun);
         return goal;
     }
 
@@ -61,8 +57,6 @@ class Menu
     {
         Console.Write("Please enter goal name: ");
         string name = Console.ReadLine();
-        Console.Write("Please enter goal description: ");
-        string description = Console.ReadLine();
         Console.Write("Please enter goal points value: ");
         int points = int.Parse(Console.ReadLine());
         Console.Write("Please enter energy value: ");
@@ -73,7 +67,7 @@ class Menu
         int health = int.Parse(Console.ReadLine());
         Console.Write("Please enter fun value: ");
         int fun = int.Parse(Console.ReadLine());
-        Goal goal = new EternalGoal(name, description, points, energy, work, health, fun);
+        Goal goal = new EternalGoal(name, points, energy, work, health, fun);
         return goal;
     }
 
@@ -108,8 +102,7 @@ class Menu
         Console.Write("Please enter fun value: ");
         int fun = int.Parse(Console.ReadLine());
         int maxComplete = steps.Count;
-        string description = $"STEP 1: {steps[0]}";
-        Goal goal = new ProgressiveGoal(name, description, points, maxComplete, bonus, energy, work, health, fun, steps);
+        Goal goal = new ProgressiveGoal(name, points, maxComplete, bonus, energy, work, health, fun, steps);
         return goal;
     }
 
@@ -147,77 +140,89 @@ class Menu
             {
                 case "SimpleGoal":
                     // Check for the correct number of parts for SimpleGoal
-                    if (parts.Length == 9)
+                    if (parts.Length == 8)
                     {
                         goals.Add(new SimpleGoal(
                             parts[1], // Name
-                            parts[2], // Description
-                            int.Parse(parts[3]), // Points
-                            int.Parse(parts[4]), // Energy
-                            int.Parse(parts[5]), // Work
-                            int.Parse(parts[6]), // Health
-                            int.Parse(parts[7]), // Fun
-                            bool.Parse(parts[8]) // IsCompleted
+                            int.Parse(parts[2]), // Points
+                            int.Parse(parts[3]), // Energy
+                            int.Parse(parts[4]), // Work
+                            int.Parse(parts[5]), // Health
+                            int.Parse(parts[6]), // Fun
+                            bool.Parse(parts[7]) // IsCompleted
                         ));
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: File goal has incorrect number of parts.");
                     }
                     break;
 
                 case "EternalGoal":
                     // Check for the correct number of parts for EternalGoal
-                    if (parts.Length == 8)
+                    if (parts.Length == 7)
                     {
                         goals.Add(new EternalGoal(
                             parts[1], // Name
-                            parts[2], // Description
-                            int.Parse(parts[3]), // Points
-                            int.Parse(parts[4]), // Energy
-                            int.Parse(parts[5]), // Work
-                            int.Parse(parts[6]), // Health
-                            int.Parse(parts[7]) // Fun
+                            int.Parse(parts[2]), // Points
+                            int.Parse(parts[3]), // Energy
+                            int.Parse(parts[4]), // Work
+                            int.Parse(parts[5]), // Health
+                            int.Parse(parts[6]) // Fun
                         ));
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: File goal has incorrect number of parts.");
                     }
                     break;
 
                 case "ChecklistGoal":
                     // Check for the correct number of parts for ChecklistGoal
-                    if (parts.Length == 12)
+                    if (parts.Length == 11)
                     {
                         goals.Add(new ChecklistGoal(
                             parts[1], // Name
-                            parts[2], // Description
-                            int.Parse(parts[3]), // Points
-                            int.Parse(parts[4]), // Energy
-                            int.Parse(parts[5]), // Work
-                            int.Parse(parts[6]), // Health
-                            int.Parse(parts[7]), // Fun
-                            bool.Parse(parts[8]), // IsCompleted
-                            int.Parse(parts[9]), // MaxComplete
-                            int.Parse(parts[10]), // NumComplete
-                            int.Parse(parts[11]) // Bonus
+                            int.Parse(parts[2]), // Points
+                            int.Parse(parts[3]), // Energy
+                            int.Parse(parts[4]), // Work
+                            int.Parse(parts[5]), // Health
+                            int.Parse(parts[6]), // Fun
+                            bool.Parse(parts[7]), // IsCompleted
+                            int.Parse(parts[8]), // MaxComplete
+                            int.Parse(parts[9]), // NumComplete
+                            int.Parse(parts[10]) // Bonus
                         ));
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: File goal has incorrect number of parts.");
                     }
                     break;
 
                 case "ProgressiveGoal":
                     // Check for the correct number of parts for ProgressiveGoal
-                    if (parts.Length == 13)
+                    if (parts.Length == 12)
                     {
                         string[] stepsArray = parts[12].Split(new[] { ";;" }, StringSplitOptions.None);
                         List<string> steps = new List<string>(stepsArray);
                         goals.Add(new ProgressiveGoal(
                             parts[1], // Name
-                            parts[2], // Description
-                            int.Parse(parts[3]), // Points
+                            int.Parse(parts[2]), // Points
                             int.Parse(parts[4]), // Energy
                             int.Parse(parts[5]), // Work
-                            int.Parse(parts[6]), // Health
-                            int.Parse(parts[7]), // Fun
-                            bool.Parse(parts[8]), // IsCompleted
-                            int.Parse(parts[9]), // MaxComplete
-                            int.Parse(parts[10]), // Bonus
-                            int.Parse(parts[11]), // NumComplete
+                            int.Parse(parts[5]), // Health
+                            int.Parse(parts[6]), // Fun
+                            bool.Parse(parts[7]), // IsCompleted
+                            int.Parse(parts[8]), // MaxComplete
+                            int.Parse(parts[9]), // Bonus
+                            int.Parse(parts[10]), // NumComplete
                             steps // Steps
                         ));
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: File goal has incorrect number of parts.");
                     }
                     break;
 
@@ -244,5 +249,62 @@ class Menu
 
     // Method to record an event (check off a goal)
 
+    public List<Goal> DeleteGoals(List<Goal> goalsList, List<int> goalsIndexis)
+    {
+        List<Goal> newGoalsList = new List<Goal>();
+        foreach (Goal goal in goalsList)
+        {
+            newGoalsList.Add(goal);
+        }
+
+        foreach (int i in goalsIndexis)
+        {
+            newGoalsList.Remove(goalsList[i]);
+        }
+
+        return newGoalsList;
+
+    }
+
+    public void CreateDefaultFiles(string playerName)
+    {
+
+        // File loading code written with the help of ChatGPT
+        // It wrote some basic code for creating
+        // new files and helped me write the code
+        // for writing the default files
+
+
+        Directory.CreateDirectory($"PlayersInfo/{playerName}");
+        File.Create($"PlayersInfo/{playerName}/player.txt").Dispose();
+        File.Create($"PlayersInfo/{playerName}/goals.txt").Dispose();
+        File.Create($"PlayersInfo/{playerName}/shop.txt").Dispose();
+
+        // Write default player info
+        using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/player.txt"))
+        {
+            writer.WriteLine($"{playerName}");
+            writer.WriteLine("0");
+            writer.WriteLine($"Energy,100,-10,{DateTime.Now}");
+            writer.WriteLine($"Health,100,2,{DateTime.Now}");
+            writer.WriteLine($"Work,100,2,{DateTime.Now}");
+            writer.WriteLine($"Rest,100,2,{DateTime.Now}");
+        }
+
+        // Write default goals info
+        using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/goals.txt"))
+        {
+            writer.WriteLine("SimpleGoal||Explore||10||10||10||10||10||false");
+            writer.WriteLine("EternalGoal||Do Daily Planning||20||20||20||20||20");
+            writer.WriteLine("ChecklistGoal||Finish 3 tasks||30||30||30||30||30||false||3||0||10");
+        }
+
+        // Write default shop info (placeholder)
+        using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/shop.txt"))
+        {
+            writer.WriteLine("Candy||Something Sweet!||3||50");
+            writer.WriteLine("Movie time!||Watch something fun!!||1||500");
+        }
+    }
 
 }

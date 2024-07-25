@@ -7,8 +7,8 @@ public class ChecklistGoal : Goal
     protected int _bonus;
 
     // Constructor to initialize checklist goal
-    public ChecklistGoal(string name, string description, string pointsValue, int maxComplete, int bonus, int energyValue, int workValue, int healthValue, int funValue) 
-    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
+    public ChecklistGoal(string name, string pointsValue, int maxComplete, int bonus, int energyValue, int workValue, int healthValue, int funValue) 
+    : base(name, pointsValue, energyValue, workValue, healthValue, funValue)
     {
         _maxComplete = maxComplete;
         _bonus = bonus;
@@ -16,8 +16,8 @@ public class ChecklistGoal : Goal
     }
 
     // Constructor for loading from file
-    public ChecklistGoal(string name, string description, int pointsValue, int energyValue, int workValue, int healthValue, int funValue, bool isComplete,int maxComplete, int numComplete, int bonus)
-    : base(name, description, pointsValue, energyValue, workValue, healthValue, funValue)
+    public ChecklistGoal(string name, int pointsValue, int energyValue, int workValue, int healthValue, int funValue, bool isComplete,int maxComplete, int numComplete, int bonus)
+    : base(name, pointsValue, energyValue, workValue, healthValue, funValue)
     {
         _maxComplete = maxComplete;
         _bonus = bonus;
@@ -56,17 +56,16 @@ public class ChecklistGoal : Goal
 
     public override string RenderDisplay()
     {
-        // TODO: update to be for Checklist
         string checkbox = "[ ]";
         if (GetIsComplete())
         {
             checkbox = "[x]";
         }
-        return $"{checkbox} {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()} -- {_numComplete}/{_maxComplete}";
+        return $"{checkbox} {GetName()} ({_numComplete}/{_maxComplete}), Points: {GetPointsValue()} | E: {base.GetEnergyValue()} | W: {base.GetWorkValue()} | H: {base.GetHealthValue()} | F: {base.GetFunValue()} |";
     }
 
     public override string RenderString()
     {
-        return $"ChecklistGoal||{base.GetName()}||{base.GetDescription()}||{base.GetPointsValue()}||{base.GetEnergyValue()}||{base.GetWorkValue()}||{base.GetHealthValue()}||{base.GetFunValue()}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}";
+        return $"ChecklistGoal||{base.GetName()}||{base.GetPointsValue()}||{base.GetEnergyValue()}||{base.GetWorkValue()}||{base.GetHealthValue()}||{base.GetFunValue()}||{base.GetIsComplete()}||{_maxComplete}||{_numComplete}||{_bonus}";
     }
 }

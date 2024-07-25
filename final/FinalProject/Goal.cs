@@ -11,7 +11,6 @@ public abstract class Goal
 
     // Attributes
     private string _name;
-    private string _description;
     private int _pointsValue;
     private bool _isComplete;
     private int _energyValue;
@@ -20,10 +19,9 @@ public abstract class Goal
     private int _funValue;
 
     // Constructor to initialize common attributes ):<
-    public Goal(string name, string description, int pointsValue, int energyValue, int workValue, int healthValue, int funValue)
+    public Goal(string name, int pointsValue, int energyValue, int workValue, int healthValue, int funValue)
     {
         _name = name;
-        _description = description;
         _pointsValue = pointsValue;
         _isComplete = false;
         _energyValue = energyValue;
@@ -33,10 +31,9 @@ public abstract class Goal
     }
 
     // In case they send me a string for pointsValue
-    public Goal(string name, string description, string pointsValue, int energyValue, int workValue, int healthValue, int funValue)
+    public Goal(string name, string pointsValue, int energyValue, int workValue, int healthValue, int funValue)
     {
         _name = name;
-        _description = description;
         _pointsValue = int.Parse(pointsValue);
         _isComplete = false;
         _energyValue = energyValue;
@@ -55,16 +52,6 @@ public abstract class Goal
     public void SetName(string name)
     {
         _name = name;
-    }
-
-    public string GetDescription()
-    {
-        return _description;
-    }
-
-    public void SetDescription(string description)
-    {
-        _description = description;
     }
 
     public int GetPointsValue()
@@ -138,7 +125,7 @@ public abstract class Goal
         {
             checkbox = "[x]";
         }
-        return $"{checkbox} {GetName()}, Description: {GetDescription()}, Points: {GetPointsValue()}";
+        return $"{checkbox} {GetName()} | E: {_energyValue} | W: {_workValue} | H: {_healthValue} | F: {_funValue} |";
     }
 
 }

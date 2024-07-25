@@ -6,13 +6,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        // When the program runs I want it to: 
-        // Load user info
-        // Load goals info
-        // Load shop info
-        // Create a new menu so that we can do stuff
-        // Set program to running so it runs
-
+        // Variable Declaration
         bool isRunning = true;
         Menu menu = new Menu();
         string userInput;
@@ -22,12 +16,9 @@ class Program
         string goalsFileName = "";
         string shopFileName = "";
 
-        // File loading code written with the help of ChatGPT
-        // It wrote some basic code for creating
-        // new files and helped me write the code
-        // for writing the default files
 
 
+        // INNITIAL LOADING
         Console.Clear();
         // Load in data or create new player
         // Get list of Players Data that's saved
@@ -38,69 +29,36 @@ class Program
             Console.WriteLine(Path.GetFileName(playerNameDirectory));
         }
 
-        // Get player name from user
         do
         {
             Console.Write("Please enter player name to load data or press ENTER to create new profile: ");
             playerName = Console.ReadLine();
             if (string.IsNullOrEmpty(playerName))
             {
-                // Run to create new player
+                // CREATE NEW PLAYER
                 Console.Write("Enter new player name: ");
                 playerName = Console.ReadLine();
-                // Create default files
-                Directory.CreateDirectory($"PlayersInfo/{playerName}");
-                File.Create($"PlayersInfo/{playerName}/player.txt").Dispose();
-                File.Create($"PlayersInfo/{playerName}/goals.txt").Dispose();
-                File.Create($"PlayersInfo/{playerName}/shop.txt").Dispose();
-
-                // Write default player info
-                using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/player.txt"))
-                {
-                    writer.WriteLine($"{playerName}");
-                    writer.WriteLine("0");
-                    writer.WriteLine($"Energy,100,-10,{DateTime.Now}");
-                    writer.WriteLine($"Health,100,2,{DateTime.Now}");
-                    writer.WriteLine($"Work,100,2,{DateTime.Now}");
-                    writer.WriteLine($"Rest,100,2,{DateTime.Now}");
-                }
-
-                // Write default goals info
-                using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/goals.txt"))
-                {
-                    writer.WriteLine("SimpleGoal||Explore||Check out some menu options!||10||10||10||10||10||false");
-                    writer.WriteLine("EternalGoal||Do Daily Planning||Add your tasks and prioritize for the day||20||20||20||20||20");
-                    writer.WriteLine("ChecklistGoal||Finish 3 tasks||Finish a task!||30||30||30||30||30||false||3||0||10");
-                }
-
-                // Write default shop info (placeholder)
-                using (StreamWriter writer = new StreamWriter($"PlayersInfo/{playerName}/shop.txt"))
-                {
-                    writer.WriteLine("// Shop data goes here");
-                }
+                menu.CreateDefaultFiles(playerName);
             }
 
         } while (!Directory.Exists($"PlayersInfo/{playerName}"));
+
 
         // Run to set correct loading files
         playerFileName = $"PlayersInfo/{playerName}/player.txt";
         goalsFileName = $"PlayersInfo/{playerName}/goals.txt";
         shopFileName = $"PlayersInfo/{playerName}/shop.txt";
-
         // Load all data from files
-        // GOALS
         goals = menu.ReadGoalsFromFile(goalsFileName);
-        // PLAYER
         Player player = Player.Load(playerFileName);
-
-        
-
-        // SHOP placeholder
+        Shop shop = Shop.LoadShopFromFile(shopFileName);
 
 
 
-        Console.Clear();
+
+
         // MENU
+
         while (isRunning)
         { 
             player.DecayStats();
@@ -110,12 +68,12 @@ class Program
             Console.WriteLine("    1. Create New Goal");
             Console.WriteLine("    2. List Goals");
             Console.WriteLine("    3. Save");
-            Console.WriteLine("    4. Open Shop");
+            Console.WriteLine("    4. Delete Goals");
             Console.WriteLine("    5. Record Event");
             Console.WriteLine("    6. Quit");
+            Console.WriteLine("    7. Open Shop");
             Console.Write("Select a choice from the menu: ");
             userInput = Console.ReadLine();
-
 
             switch (userInput)
             {
@@ -175,14 +133,50 @@ class Program
                     // TODO Write save stuff
                     menu.WriteGoalsToFile(goalsFileName, goals);
                     player.Save(playerFileName);
-                    Console.WriteLine("SHOP SAVE NOT IMPLIMENTED");
+                    shop.Save(shopFileName);
+                    Console.WriteLine("Files Saved");
                     break;
 
 
-                // MENU ITEM: BLANK (will become SHOP)   
+                // MENU ITEM: Delete Tasks 
                 case "4":
-                    break;
+                    List<int> indexList = new List<int>();
+                    bool continueDeleteTaskPrompt = true;
+                    Console.WriteLine("Delete Tasks: ");
+                    do
+                    {
+                        Console.Write("Enter a task number to delete, or press ENTER to continue: ");
+                        string newIndexString = Console.ReadLine();
+                        if (newIndexString != "")
+                        {
+                            int newIndex = int.Parse(newIndexString);
+                            indexList.Add(newIndex - 1);
 
+                        }
+                        else
+                        {
+                            continueDeleteTaskPrompt = false;
+                        }
+                    } while (continueDeleteTaskPrompt);
+
+                    Console.WriteLine("Do you want to delete the following tasks? ");
+                    foreach (int i in indexList)
+                    {
+                        Console.WriteLine(goals[i].RenderDisplay());
+                    }
+                    Console.WriteLine();
+                    Console.Write("Press 1 to delete these tasks, or press ENTER to return to menu. ");
+                    userInput = Console.ReadLine();
+                    if (userInput == "1")
+                    {
+                        goals = menu.DeleteGoals(goals, indexList);
+                        Console.WriteLine("Hurray! You've deleted some goals. Returning to main menu... ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Returning to menu... ");
+                    }
+                    break;
 
                 // MENU ITEM: Record Event          
                 case "5":
@@ -207,11 +201,16 @@ class Program
                     isRunning = false;
                     break;
 
+                case "7":
+                    player.SetPoints(shop.OpenShop(player.GetPoints()));
+                    break;
 
                 // INVALID INPUT CATCH            
                 default:
                     Console.WriteLine("Please enter a valid input");
                     break;
+
+
             }
         }
     }

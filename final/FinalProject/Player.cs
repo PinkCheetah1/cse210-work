@@ -104,4 +104,8 @@ public class Player
     {
         _points += newPoints;
     }
+    public void SetPoints(int points)
+    {
+        _points = points;
+    }
 }
